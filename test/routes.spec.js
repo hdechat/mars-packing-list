@@ -95,4 +95,15 @@ describe('API Routes', () => {
     });
   });
 
+  describe('DELETE /api/v1/items:id', () => {
+    it('should return status 204', done => {
+      chai.request(server)
+        .delete('/api/v1/items/1')
+        .end((err, response) => {
+          response.should.have.status(204);
+          done();
+        });
+    });
+  });
+
 });

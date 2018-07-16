@@ -46,6 +46,7 @@ $('#userInput__button').on('click', function() {
     appendPackingList(items)
   })
   .catch(error => console.log(error));
+  $('#userInput__item').val('')
 });
 
 $('.packingList').on('click', '.packingList__item-delete', function(event) {

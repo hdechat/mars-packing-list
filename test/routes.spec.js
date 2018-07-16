@@ -37,7 +37,6 @@ describe('API Routes', () => {
       }).catch(error => {
         throw error;
       });
-      
   });
 
 });

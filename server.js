@@ -16,12 +16,8 @@ app.get('/', (request, response) => {
 
 app.get('/api/v1/items', (request, response) => {
   database('items').select()
-   .then(list => {
-      response.status(200).json(list);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
+   .then(list => response.status(200).json(list))
+    .catch(error => response.status(500).json({ error }));
 });
 
 app.post('/api/v1/items', (request, response) => {
@@ -35,9 +31,7 @@ app.put('/api/v1/items/:id', (request, response) => {
   { id } = request.params;
 
   database('items').where('id', id ).update(update).select()
-    .then(item => {
-      response.status(202).json(item);
-    })
+    .then(item => response.status(202).json(item))
     .catch(error => response.status(500).json({ error }));
   }
 });

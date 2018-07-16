@@ -14,7 +14,9 @@ function appendPackingList({ id, item, packed}) {
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
-      <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+      <div class="packingList__checkbox">
+        <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+      </div>
     </article>`
   );
   } else {
@@ -22,7 +24,9 @@ function appendPackingList({ id, item, packed}) {
       `<article id="${id}">
         <h2>${item}</h2>
         <button class="packingList__item-delete">Delete</button>
-        <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
+        <div class="packingList__checkbox">
+          <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
+        </div>
       </article>`
     );
   }
@@ -46,12 +50,13 @@ $('#userInput__button').on('click', function() {
     appendPackingList(items)
   })
   .catch(error => console.log(error));
-  $('#userInput__item').val('');
+  $('#userInput__item').val('')
 });
 
 $('.packingList').on('click', '.packingList__item-delete', function(event) {
   event.preventDefault();
-  var itemId = $(this).parent().attr('id');
+  const itemId = $(this).parent().attr('id');
+
   fetch(`/api/v1/items/${itemId}`, {
     method: 'DELETE'
   })
@@ -61,7 +66,7 @@ $('.packingList').on('click', '.packingList__item-delete', function(event) {
 });
 
 $('.packingList').on('click', '.packingList__item-packed', function(event) {
-  const itemId = $(this).parent().attr('id');
+  const itemId = $(this).parent().parent().attr('id');
   const value = this.checked
   fetch(`/api/v1/items/${itemId}`, {
     method: 'PUT',
@@ -74,4 +79,5 @@ $('.packingList').on('click', '.packingList__item-packed', function(event) {
   })
   .then(response => console.log(response.status))
   .catch(error => console.log(error));
+
 });

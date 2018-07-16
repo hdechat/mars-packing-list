@@ -42,6 +42,14 @@ app.put('/api/v1/items/:id', (request, response) => {
   const update = request.body;
   const { id } = request.params;
 
+  for (let props of Object.keys(update)) {
+    if (!['item', 'packed'].includes(props)) {
+      return response.status(422).send({
+        error: 'Invalid entry. Properties should be either "item" or "packed"'
+      });
+    };
+  }
+
   database('items').where('id', id).select()
     .then(item => {
       if(item.length) {

@@ -139,13 +139,14 @@ describe('API Routes', () => {
 
     it('should return 422 request if incorrect properties are sent', done => {
       chai.request(server)
-        .put('/api/v1/1')
+        .put('/api/v1/items/1')
         .send({
           name: 'space suite'
         })
         .end((err, response) => {
           response.should.have.status(422);
           response.body.should.have.property('error');
+          done();
         });
     });
 

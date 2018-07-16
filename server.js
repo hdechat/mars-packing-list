@@ -28,12 +28,11 @@ app.post('/api/v1/items', (request, response) => {
 
 app.put('/api/v1/items/:id', (request, response) => {
   const update = request.body;
-  { id } = request.params;
+  const { id } = request.params;
 
   database('items').where('id', id ).update(update).select()
     .then(item => response.status(202).json(item))
     .catch(error => response.status(500).json({ error }));
-  }
 });
 
 app.listen(app.get('port'), () => {

@@ -78,7 +78,8 @@ describe('API Routes', () => {
       chai.request(server)
         .post('/api/v1/items')
         .send({
-          name: 'space suite'
+          name: 'space suite',
+          packed: false
         })
         .end((err, response) => {
           response.should.have.status(422);

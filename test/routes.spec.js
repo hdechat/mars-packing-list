@@ -150,8 +150,6 @@ describe('API Routes', () => {
         });
     });
 
-  });
-
   describe('DELETE /api/v1/items:id', () => {
     it('should return status 204', done => {
       chai.request(server)
@@ -161,6 +159,17 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('should return status 404 when item id to delete is not found', done => {
+      chai.request(server)
+        .delete('/api/v1/items/5')
+        .end((err, response) => {
+          response.should.have.status(404);
+          done();
+        });
+    });
   });
+
+});
 
 });

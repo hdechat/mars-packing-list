@@ -11,8 +11,16 @@ header, main {
   text-align: center;
 }
 
+article {
+  border: solid #f0e7e7;
+  padding: 0.5em;
+  margin: 1em 10em;
+  text-align: left;
+}
+
 main {
   height: 600px;
+  padding: 1em;
 }
 
 h1 {
@@ -22,6 +30,16 @@ h1 {
   letter-spacing: 0.1rem;
   margin: 0;
   padding: 1rem;
+}
+
+hr {
+  margin: 0;
+}
+
+h2 {
+  display: inline-block;
+  line-height: 0;
+  margin: 0;
 }
 
 #userInput__item {
@@ -43,6 +61,11 @@ h1 {
   height: 3.3rem;
 }
 
-hr {
-  margin: 0;
+.packingList__item-delete {
+  float: right;
 }
+
+.packingList__checkbox {
+  text-align: left;
+}
+

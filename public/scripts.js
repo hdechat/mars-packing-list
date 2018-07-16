@@ -14,7 +14,9 @@ function appendPackingList({ id, item, packed}) {
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
-      <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+      <div class="packingList__checkbox">
+        <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+      </div>
     </article>`
   );
   } else {
@@ -22,7 +24,9 @@ function appendPackingList({ id, item, packed}) {
       `<article id="${id}">
         <h2>${item}</h2>
         <button class="packingList__item-delete">Delete</button>
-        <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
+        <div class="packingList__checkbox">
+          <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
+        </div>
       </article>`
     );
   }

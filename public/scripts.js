@@ -8,13 +8,24 @@ function persistData()  {
 }
 
 function appendPackingList({ id, item, packed}) {
-  $('.packingList').append(
+  console.log(packed)
+  if(packed) {
+    $('.packingList').append(
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
-      <input value = packed type="checkbox" name="packed" /> Packed
+      <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
     </article>`
   );
+  } else {
+    $('.packingList').append(
+      `<article id="${id}">
+        <h2>${item}</h2>
+        <button class="packingList__item-delete">Delete</button>
+        <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
+      </article>`
+    );
+  }
 }
 
 $('#userInput__button').on('click', function() {

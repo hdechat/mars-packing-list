@@ -68,9 +68,18 @@ app.put('/api/v1/items/:id', (request, response) => {
 });
 
 app.delete('/api/v1/items/:id', (request, response) => {
-  database('items').where('id', request.params.id).delete()
-    .then(() => response.sendStatus(204))
-    .catch(error => response.status(500).json({ error }));
+  const { id } = request.params
+
+  database('items').where('id', id).select()
+    .then(item => {
+      if (item.length) {
+        database('items').where('id', id).delete()
+          .then(() => response.sendStatus(204))
+          .catch(error => response.status(500).json({ error }));
+      } else {
+        response.status(404).json({ error: `Could not find item with id: ${id}` })
+      }
+    })
 });
 
 app.listen(app.get('port'), () => {

@@ -7,6 +7,8 @@ const environment = process.env.NODE_ENV || 'test';
 const configuration = require('../knexfile')[environment];
 const knex = require('knex')(configuration);
 
+chai.use(chaiHttp);
+
 describe('Client routes', () => {
 
   it('should return 404 with an unknown endpoint', done => {

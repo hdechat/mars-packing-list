@@ -73,6 +73,20 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('should not post a new item if request is sent incorrectly', done => {
+      chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          name: 'space suite'
+        })
+        .end((err, response) => {
+          response.should.have.status(422);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          done();
+        });
+    });
   });
 
   describe('PUT /api/v1/items:id', () => {

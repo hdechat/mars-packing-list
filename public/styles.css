@@ -38,8 +38,9 @@ h1 {
 #userInput__button {
   background: #fda600;
   border: none;
+  color: #451804;
   box-shadow: 4px 4px 10px #451804;
-  height: 2.5rem;
+  height: 3.3rem;
 }
 
 hr {

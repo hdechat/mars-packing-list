@@ -39,4 +39,22 @@ describe('API Routes', () => {
       });
   });
 
+  describe('GET /api/v1/items', () => {
+    it('should return all the items', done => {
+      chai.request(server)
+        .get('/api/v1/items')
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body.should.be.a('array');
+          response.body.length.should.equal(3);
+          response.body[0].should.have.property('item');
+          response.body[0].item.should.equal('helmet');
+          response.body[0].should.have.property('packed');
+          response.body[0].packed.should.equal(false);
+          done();
+        });
+    });
+  });
+
 });

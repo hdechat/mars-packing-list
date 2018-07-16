@@ -7,12 +7,32 @@ function persistData()  {
     .catch(error => console.log(error))
 }
 
-function appendPackingList({ id, item, packed }) {
+function appendPackingList({ id, item, packed}) {
   $('.packingList').append(
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
-      <input type="checkbox" name="packed" /> Packed
+      <input value = packed type="checkbox" name="packed" /> Packed
     </article>`
   );
 }
+
+$('#userInput__button').on('click', function() {
+  const item = $('#userInput__item').val();
+  fetch('/api/v1/items', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      item,
+      packed: false
+    })
+  })
+  .then(res => res.json())
+  .then(id => {
+    items = {id: id.id, item: item, packed: false}
+    appendPackingList(items)
+  })
+  .catch(error => console.log(error))
+});

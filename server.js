@@ -10,10 +10,6 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.set('port', process.env.PORT || 3000);
 
-app.get('/', (request, response) => {
-  response.send('Success');
-});
-
 app.get('/api/v1/items', (request, response) => {
   database('items').select()
    .then(list => response.status(200).json(list))
@@ -51,4 +47,3 @@ app.listen(app.get('port'), () => {
 app.use((request, response) => {
   response.status(404).send('PAGE NOT FOUND');
 });
-

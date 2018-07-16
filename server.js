@@ -47,3 +47,8 @@ app.delete('/api/v1/items/:id', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${app.get('port')}.`);
 });
+
+app.use((request, response) => {
+  response.status(404).send('PAGE NOT FOUND');
+});
+

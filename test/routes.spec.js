@@ -75,4 +75,24 @@ describe('API Routes', () => {
     });
   });
 
+  describe('PUT /api/v1/items:id', () => {
+    it('should return updated item object', done => {
+      chai.request(server)
+        .put('/api/v1/items/1')
+        .send({
+          packed: true
+        })
+        .end((err, response) => {
+          response.should.have.status(202);
+          response.should.be.json;
+          response.body[0].should.be.a('object');
+          response.body[0].should.have.property('item');
+          response.body[0].item.should.equal('helmet');
+          response.body[0].should.have.property('packed');
+          response.body[0].packed.should.equal(true);
+          done();
+        });
+    });
+  });
+
 });

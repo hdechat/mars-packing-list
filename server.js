@@ -38,6 +38,12 @@ app.put('/api/v1/items/:id', (request, response) => {
     .catch(error => response.status(500).json({ error }));
 });
 
+app.delete('/api/v1/items/:id', (request, response) => {
+  database('items').where('id', request.params.id).delete()
+    .then(() => response.sendStatus(204))
+    .catch(error => response.status(500).json({ error }));
+});
+
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${app.get('port')}.`);
 });

@@ -1,0 +1,47 @@
+body {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  height: 100%;
+  margin: 0 25%;
+}
+
+header, main {
+  background-color: #e77d11;
+  text-align: center;
+}
+
+main {
+  height: 600px;
+}
+
+h1 {
+  color:  #f0e7e7 ;
+  font-family: 'Roboto Slab', serif;
+  font-size: 50px;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  padding: 1rem;
+}
+
+#userInput__item {
+  margin: 0.5rem;
+  padding-left: 0.5rem;
+  height: 3rem;
+  width: 50%;
+}
+
+#userInput__item::placeholder {
+  font-size: 1.5rem;
+}
+
+#userInput__button {
+  background: #fda600;
+  border: none;
+  box-shadow: 4px 4px 10px #451804;
+  height: 2.5rem;
+}
+
+hr {
+  margin: 0;
+}

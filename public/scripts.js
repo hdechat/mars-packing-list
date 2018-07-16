@@ -66,7 +66,7 @@ $('.packingList').on('click', '.packingList__item-delete', function(event) {
 });
 
 $('.packingList').on('click', '.packingList__item-packed', function(event) {
-  const itemId = $(this).parent().attr('id');
+  const itemId = $(this).parent().parent().attr('id');
   const value = this.checked
   fetch(`/api/v1/items/${itemId}`, {
     method: 'PUT',

@@ -24,6 +24,12 @@ app.get('/api/v1/items', (request, response) => {
     });
 });
 
+app.post('/api/v1/items', (request, response) => {
+  database('items').insert(request.body, 'id')
+    .then(item => response.status(201).json({ id: item[0] }))
+    .catch(error => response.status(500).json({ error }));
+});
+
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${app.get('port')}.`);
 });

@@ -42,10 +42,19 @@ app.put('/api/v1/items/:id', (request, response) => {
   const update = request.body;
   const { id } = request.params;
 
-  database('items').where('id', id ).update(update)
-    .then(() => {
-      database('items').where('id', id).select()
-        .then(item => response.status(202).json(item));
+  database('items').where('id', id).select()
+    .then(item => {
+      if(item.length) {
+        database('items').where('id', id).update(update)
+          .then(() => {
+            database('items').where('id', id).select()
+              .then(updatedItem => {
+                response.status(202).json(updatedItem);
+              });
+          });
+      } else {
+        response.status(404).json({ error: `Could not find item with id: ${id}` })
+      }
     })
     .catch(error => response.status(500).json({ error }));
 });

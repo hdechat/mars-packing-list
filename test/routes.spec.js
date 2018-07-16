@@ -122,6 +122,19 @@ describe('API Routes', () => {
           done();
         });
     });
+
+    it('should return 404 when item to update does not exist', done => {
+      chai.request(server)
+        .put('/api/v1/items/5')
+        .send({
+          item: 'space suit',
+          packed: false
+        })
+        .end((err, response) => {
+          response.should.have.status(404);
+          done();
+        });
+    });
   });
 
   describe('DELETE /api/v1/items:id', () => {

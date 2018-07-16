@@ -57,4 +57,22 @@ describe('API Routes', () => {
     });
   });
 
+  describe('POST /api/v1/items', () => {
+    it('should return new id of posted item', done => {
+      chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          item: 'boots',
+          packed: false
+        })
+        .end((err, response) => {
+          response.should.have.status(201);
+          response.should.be.json;
+          response.should.be.a('object');
+          response.body.id.should.equal(4);
+          done();
+        });
+    });
+  });
+
 });

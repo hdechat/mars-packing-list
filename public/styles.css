@@ -14,11 +14,12 @@ header, main {
 article {
   border: solid #f0e7e7;
   padding: 0.5em;
-  margin: 1em 10em;
+  margin: 1em 5em;
   text-align: left;
 }
 
 main {
+  color: color: #451804;;
   height: 600px;
   padding: 1em;
 }
@@ -37,8 +38,8 @@ hr {
 }
 
 h2 {
+  color: #451804;
   display: inline-block;
-  line-height: 0;
   margin: 0;
 }
 
@@ -56,16 +57,25 @@ h2 {
 #userInput__button {
   background: #fda600;
   border: none;
-  color: #451804;
   box-shadow: 4px 4px 10px #451804;
+  color: #451804;
   height: 3.3rem;
 }
 
 .packingList__item-delete {
+  background-color: #c1440e;
+  border: none;
+  box-shadow: 4px 4px 10px #451804;
+  color: #451804;
   float: right;
 }
 
 .packingList__checkbox {
+  color: #451804;
+  margin-top: 0.5em;
   text-align: left;
 }
 
+.packingList__item-packed {
+  vertical-align: top;
+}

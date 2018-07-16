@@ -17,6 +17,16 @@ app.get('/api/v1/items', (request, response) => {
 });
 
 app.post('/api/v1/items', (request, response) => {
+  const newItem =request.body;
+
+  for (let props of Object.keys(newItem)) {
+    if (!['item', 'packed'].includes(props)) {
+      return response.status(422).send({
+      error: 'Invalid entry. Please include "name" <string> and "packed" <boolean> properties'
+      });
+    };
+  }
+
   database('items').insert(request.body, 'id')
     .then(item => response.status(201).json({ id: item[0] }))
     .catch(error => response.status(500).json({ error }));

@@ -9,6 +9,14 @@ const knex = require('knex')(configuration);
 
 describe('Client routes', () => {
 
+  it('should return 404 with an unknown endpoint', done => {
+    chai.request(server)
+      .get('/api/v1/badendpoint')
+      .end((error, response) => {
+        response.should.have.status(404);
+      });
+    done();
+  });
   
 });
 
@@ -29,5 +37,5 @@ describe('API Routes', () => {
       });
       
   });
-  
+
 });

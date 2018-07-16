@@ -47,3 +47,19 @@ $('.packingList').on('click', '.packingList__item-delete', function(event) {
   .catch(error => console.log(error));
   $(this).parent().remove();
 });
+
+$('.packingList').on('click', '.packingList__item-packed', function(event) {
+  const itemId = $(this).parent().attr('id');
+  const value = this.checked
+  fetch(`/api/v1/items/${itemId}`, {
+    method: 'PUT',
+    headers: {
+    "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      packed: value
+    })
+  })
+  .then(response => console.log(response.status))
+  .catch(error => console.log(error));
+});

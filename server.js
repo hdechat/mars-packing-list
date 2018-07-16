@@ -27,6 +27,12 @@ app.post('/api/v1/items', (request, response) => {
     };
   }
 
+  if(Object.keys(newItem).length !== 2) {
+    return response.status(422).send({
+      error: 'Data missing! Please include "name" <string> and "packed" <boolean> properties'
+    });
+  }
+
   database('items').insert(request.body, 'id')
     .then(item => response.status(201).json({ id: item[0] }))
     .catch(error => response.status(500).json({ error }));

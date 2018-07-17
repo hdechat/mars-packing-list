@@ -27,26 +27,23 @@ function checkPacked(id) {
     `)
 }
 
-$('#userInput__button').on('click', function() {
+$('#userInput__button').on('click', addItem)
+
+function addItem() {
   const item = $('#userInput__item').val();
+  $('#userInput__item').val('')
+
   fetch('/api/v1/items', {
     method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      item,
-      packed: false
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ item, packed: false })
   })
-  .then(res => res.json())
-  .then(id => {
-    items = {id: id.id, item: item, packed: false}
-    appendPackingList(items)
+  .then(response => response.json())
+  .then(({ id }) => {
+    appendPackingList({ id, item, packed: false })
   })
   .catch(error => console.log(error));
-  $('#userInput__item').val('')
-});
+};
 
 $('.packingList').on('click', '.packingList__item-delete', function(event) {
   event.preventDefault();

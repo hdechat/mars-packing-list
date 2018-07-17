@@ -45,17 +45,16 @@ function addItem() {
   .catch(error => console.log(error));
 };
 
-$('.packingList').on('click', '.packingList__item-delete', function(event) {
-  event.preventDefault();
-  const itemId = $(this).parent().attr('id');
+$('.packingList').on('click', '.packingList__item-delete', deleteItem)
 
-  fetch(`/api/v1/items/${itemId}`, {
-    method: 'DELETE'
-  })
-  .then(response => console.log('status is ' + response.status))
-  .catch(error => console.log(error));
+function deleteItem() {
+  const itemId = $(this).parent().attr('id');
   $(this).parent().remove();
-});
+
+  fetch(`/api/v1/items/${itemId}`, { method: 'DELETE' })
+    .then(response => response)
+    .catch(error => console.log(error));
+};
 
 $('.packingList').on('click', '.packingList__item-packed', function(event) {
   const itemId = $(this).parent().parent().attr('id');

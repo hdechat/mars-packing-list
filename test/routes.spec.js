@@ -170,6 +170,7 @@ describe('API Routes', () => {
         .delete('/api/v1/items/5')
         .end((err, response) => {
           response.should.have.status(404);
+          response.body.error.should.equal('Could not find item with id: 5')
           done();
         });
     });

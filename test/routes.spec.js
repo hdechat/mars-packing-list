@@ -149,6 +149,7 @@ describe('API Routes', () => {
           done();
         });
     });
+  });
 
   describe('DELETE /api/v1/items:id', () => {
     it('should return status 204', done => {
@@ -169,7 +170,5 @@ describe('API Routes', () => {
         });
     });
   });
-
-});
 
 });

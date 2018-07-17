@@ -135,6 +135,7 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(404);
           response.body.should.have.property('error');
+          response.body.error.should.equal('Could not find item with id: 5')
           done();
         });
     });

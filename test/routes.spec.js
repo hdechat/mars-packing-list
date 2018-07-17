@@ -149,6 +149,7 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(422);
           response.body.should.have.property('error');
+          response.body.error.should.equal('Invalid entry. Properties should be either "item" or "packed"')
           done();
         });
     });

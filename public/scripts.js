@@ -1,14 +1,14 @@
 $(document).ready(persistData);
 $('#userInput__button').on('click', addItem);
-$('.packingList').on('click', '.packingList__item-delete', deleteItem)
-$('.packingList').on('click', '.packingList__item-packed', togglePacked)
+$('.packingList').on('click', '.packingList__item-delete', deleteItem);
+$('.packingList').on('click', '.packingList__item-packed', togglePacked);
 
 function persistData()  {
   fetch('/api/v1/items')
     .then(response => response.json())
     .then(items => items.forEach(item => appendPackingList(item)))
-    .catch(error => console.log(error))
-}
+    .catch(error => console.log(error));
+};
 
 function appendPackingList({ id, item, packed}) {
   $('.packingList').append(
@@ -22,18 +22,18 @@ function appendPackingList({ id, item, packed}) {
   );
 
   packed ? checkPacked(id) : '';
-}
+};
 
 function checkPacked(id) {
   $(`#${id}`).find('.packingList__item-packed').replaceWith(`
     <input class="packingList__item-packed" type="checkbox" name="packed" checked/>
-    `)
-}
+    `);
+};
 
 
 function addItem() {
   const item = $('#userInput__item').val();
-  $('#userInput__item').val('')
+  $('#userInput__item').val('');
 
   fetch('/api/v1/items', {
     method: 'POST',

@@ -8,27 +8,23 @@ function persistData()  {
 }
 
 function appendPackingList({ id, item, packed}) {
-  if(packed) {
-    $('.packingList').append(
+  $('.packingList').append(
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
       <div class="packingList__checkbox">
-        <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+        <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
       </div>
     </article>`
   );
-  } else {
-    $('.packingList').append(
-      `<article id="${id}">
-        <h2>${item}</h2>
-        <button class="packingList__item-delete">Delete</button>
-        <div class="packingList__checkbox">
-          <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
-        </div>
-      </article>`
-    );
-  }
+
+  packed ? checkPacked(id) : '';
+}
+
+function checkPacked(id) {
+  $(`#${id}`).find('.packingList__item-packed').replaceWith(`
+    <input class="packingList__item-packed" type="checkbox" name="packed" checked/>
+    `)
 }
 
 $('#userInput__button').on('click', function() {
@@ -78,5 +74,4 @@ $('.packingList').on('click', '.packingList__item-packed', function(event) {
   })
   .then(response => console.log(response.status))
   .catch(error => console.log(error));
-
 });

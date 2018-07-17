@@ -3,8 +3,7 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 const server = require('../server');
 
-const environment = process.env.NODE_ENV || 'test';
-const configuration = require('../knexfile')[environment];
+const configuration = require('../knexfile')['test'];
 const knex = require('knex')(configuration);
 
 chai.use(chaiHttp);
@@ -16,7 +15,7 @@ describe('Client routes', () => {
       .get('/api/v1/badendpoint')
       .end((error, response) => {
         response.should.have.status(404);
-        response.error.text.should.equal('PAGE NOT FOUND')
+        response.error.text.should.equal('PAGE NOT FOUND');
       });
     done();
   });
@@ -25,12 +24,12 @@ describe('Client routes', () => {
 
 describe('API Routes', () => {
 
-  beforeEach((done) => {
+  beforeEach(done => {
     knex.migrate.rollback()
       .then(() => {
         knex.migrate.latest()
           .then(() => {
-            return knex.seed.run()
+            knex.seed.run()
               .then(() => {
                 done();
               });
@@ -44,7 +43,7 @@ describe('API Routes', () => {
     it('should return all the items', done => {
       chai.request(server)
         .get('/api/v1/items')
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(200);
           response.should.be.json;
           response.body.should.be.a('array');
@@ -66,7 +65,7 @@ describe('API Routes', () => {
           item: 'boots',
           packed: false
         })
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(201);
           response.should.be.json;
           response.should.be.a('object');
@@ -82,7 +81,7 @@ describe('API Routes', () => {
           name: 'space suite',
           packed: false
         })
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(422);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
@@ -97,7 +96,7 @@ describe('API Routes', () => {
         .send({
           item: 'space suit'
         })
-        .end((err,response) => {
+        .end((error,response) => {
           response.should.have.status(422);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
@@ -114,7 +113,7 @@ describe('API Routes', () => {
         .send({
           packed: true
         })
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(202);
           response.should.be.json;
           response.body[0].should.be.a('object');
@@ -133,7 +132,7 @@ describe('API Routes', () => {
           item: 'space suit',
           packed: false
         })
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(404);
           response.body.should.have.property('error');
           response.body.error.should.equal('Could not find item with id: 5')
@@ -147,7 +146,7 @@ describe('API Routes', () => {
         .send({
           name: 'space suite'
         })
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(422);
           response.body.should.have.property('error');
           response.body.error.should.equal('Invalid entry. Properties should be either "item" or "packed"')
@@ -160,7 +159,7 @@ describe('API Routes', () => {
     it('should return status 204', done => {
       chai.request(server)
         .delete('/api/v1/items/1')
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(204);
           done();
         });
@@ -169,7 +168,7 @@ describe('API Routes', () => {
     it('should return status 404 when item id to delete is not found', done => {
       chai.request(server)
         .delete('/api/v1/items/5')
-        .end((err, response) => {
+        .end((error, response) => {
           response.should.have.status(404);
           response.body.error.should.equal('Could not find item with id: 5')
           done();

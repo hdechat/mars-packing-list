@@ -56,18 +56,17 @@ function deleteItem() {
     .catch(error => console.log(error));
 };
 
-$('.packingList').on('click', '.packingList__item-packed', function(event) {
-  const itemId = $(this).parent().parent().attr('id');
-  const value = this.checked
+$('.packingList').on('click', '.packingList__item-packed', togglePacked)
+
+function togglePacked() {
+  const itemId = $(this).parents('article').attr('id');
+  const value = this.checked;
+
   fetch(`/api/v1/items/${itemId}`, {
     method: 'PUT',
-    headers: {
-    "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      packed: value
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ packed: value })
   })
-  .then(response => console.log(response.status))
+  .then(response => response)
   .catch(error => console.log(error));
-});
+};

@@ -1,82 +1,70 @@
 $(document).ready(persistData);
+$('#userInput__button').on('click', addItem);
+$('.packingList').on('click', '.packingList__item-delete', deleteItem);
+$('.packingList').on('click', '.packingList__item-packed', togglePacked);
 
 function persistData()  {
   fetch('/api/v1/items')
     .then(response => response.json())
     .then(items => items.forEach(item => appendPackingList(item)))
-    .catch(error => console.log(error))
-}
+    .catch(error => console.log(error));
+};
 
 function appendPackingList({ id, item, packed}) {
-  if(packed) {
-    $('.packingList').append(
+  $('.packingList').append(
     `<article id="${id}">
       <h2>${item}</h2>
       <button class="packingList__item-delete">Delete</button>
       <div class="packingList__checkbox">
-        <input class="packingList__item-packed" type="checkbox" name="packed" checked/> Packed
+        <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
       </div>
     </article>`
   );
-  } else {
-    $('.packingList').append(
-      `<article id="${id}">
-        <h2>${item}</h2>
-        <button class="packingList__item-delete">Delete</button>
-        <div class="packingList__checkbox">
-          <input class="packingList__item-packed" type="checkbox" name="packed" /> Packed
-        </div>
-      </article>`
-    );
-  }
-}
 
-$('#userInput__button').on('click', function() {
+  packed ? checkPacked(id) : '';
+};
+
+function checkPacked(id) {
+  $(`#${id}`).find('.packingList__item-packed').replaceWith(`
+    <input class="packingList__item-packed" type="checkbox" name="packed" checked/>
+    `);
+};
+
+
+function addItem() {
   const item = $('#userInput__item').val();
+  $('#userInput__item').val('');
+
   fetch('/api/v1/items', {
     method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      item,
-      packed: false
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ item, packed: false })
   })
-  .then(res => res.json())
-  .then(id => {
-    items = {id: id.id, item: item, packed: false}
-    appendPackingList(items)
+  .then(response => response.json())
+  .then(({ id }) => {
+    appendPackingList({ id, item, packed: false })
   })
   .catch(error => console.log(error));
-  $('#userInput__item').val('')
-});
+};
 
-$('.packingList').on('click', '.packingList__item-delete', function(event) {
-  event.preventDefault();
+function deleteItem() {
   const itemId = $(this).parent().attr('id');
-
-  fetch(`/api/v1/items/${itemId}`, {
-    method: 'DELETE'
-  })
-  .then(response => console.log('status is ' + response.status))
-  .catch(error => console.log(error));
   $(this).parent().remove();
-});
 
-$('.packingList').on('click', '.packingList__item-packed', function(event) {
-  const itemId = $(this).parent().parent().attr('id');
-  const value = this.checked
+  fetch(`/api/v1/items/${itemId}`, { method: 'DELETE' })
+    .then(response => response)
+    .catch(error => console.log(error));
+};
+
+function togglePacked() {
+  const itemId = $(this).parents('article').attr('id');
+  const value = this.checked;
+
   fetch(`/api/v1/items/${itemId}`, {
     method: 'PUT',
-    headers: {
-    "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      packed: value
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ packed: value })
   })
-  .then(response => console.log(response.status))
+  .then(response => response)
   .catch(error => console.log(error));
-
-});
+};

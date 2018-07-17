@@ -16,6 +16,7 @@ describe('Client routes', () => {
       .get('/api/v1/badendpoint')
       .end((error, response) => {
         response.should.have.status(404);
+        response.error.text.should.equal('PAGE NOT FOUND')
       });
     done();
   });
@@ -85,6 +86,7 @@ describe('API Routes', () => {
           response.should.have.status(422);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
+          response.body.error.should.equal('Invalid entry. Please include "name" <string> and "packed" <boolean> properties')
           done();
         });
     });
@@ -99,6 +101,7 @@ describe('API Routes', () => {
           response.should.have.status(422);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
+          response.body.error.should.equal('Data missing! Please include "name" <string> and "packed" <boolean> properties')
           done();
         });
     });
@@ -133,6 +136,7 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(404);
           response.body.should.have.property('error');
+          response.body.error.should.equal('Could not find item with id: 5')
           done();
         });
     });
@@ -146,9 +150,11 @@ describe('API Routes', () => {
         .end((err, response) => {
           response.should.have.status(422);
           response.body.should.have.property('error');
+          response.body.error.should.equal('Invalid entry. Properties should be either "item" or "packed"')
           done();
         });
     });
+  });
 
   describe('DELETE /api/v1/items:id', () => {
     it('should return status 204', done => {
@@ -165,11 +171,10 @@ describe('API Routes', () => {
         .delete('/api/v1/items/5')
         .end((err, response) => {
           response.should.have.status(404);
+          response.body.error.should.equal('Could not find item with id: 5')
           done();
         });
     });
   });
-
-});
 
 });

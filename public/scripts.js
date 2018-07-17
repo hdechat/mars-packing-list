@@ -8,7 +8,6 @@ function persistData()  {
 }
 
 function appendPackingList({ id, item, packed}) {
-  console.log(packed)
   if(packed) {
     $('.packingList').append(
     `<article id="${id}">

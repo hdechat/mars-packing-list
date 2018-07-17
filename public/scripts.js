@@ -1,4 +1,7 @@
 $(document).ready(persistData);
+$('#userInput__button').on('click', addItem);
+$('.packingList').on('click', '.packingList__item-delete', deleteItem)
+$('.packingList').on('click', '.packingList__item-packed', togglePacked)
 
 function persistData()  {
   fetch('/api/v1/items')
@@ -27,7 +30,6 @@ function checkPacked(id) {
     `)
 }
 
-$('#userInput__button').on('click', addItem)
 
 function addItem() {
   const item = $('#userInput__item').val();
@@ -45,8 +47,6 @@ function addItem() {
   .catch(error => console.log(error));
 };
 
-$('.packingList').on('click', '.packingList__item-delete', deleteItem)
-
 function deleteItem() {
   const itemId = $(this).parent().attr('id');
   $(this).parent().remove();
@@ -55,8 +55,6 @@ function deleteItem() {
     .then(response => response)
     .catch(error => console.log(error));
 };
-
-$('.packingList').on('click', '.packingList__item-packed', togglePacked)
 
 function togglePacked() {
   const itemId = $(this).parents('article').attr('id');

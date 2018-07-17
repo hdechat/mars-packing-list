@@ -100,6 +100,7 @@ describe('API Routes', () => {
           response.should.have.status(422);
           response.body.should.be.a('object');
           response.body.should.have.property('error');
+          response.body.error.should.equal('Data missing! Please include "name" <string> and "packed" <boolean> properties')
           done();
         });
     });

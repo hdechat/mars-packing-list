@@ -16,6 +16,7 @@ describe('Client routes', () => {
       .get('/api/v1/badendpoint')
       .end((error, response) => {
         response.should.have.status(404);
+        response.error.text.should.equal('PAGE NOT FOUND')
       });
     done();
   });
